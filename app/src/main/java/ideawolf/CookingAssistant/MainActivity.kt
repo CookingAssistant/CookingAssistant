@@ -64,7 +64,7 @@ fun defaultUI() {
                 TopAppBar(
                     title = {
                         Text(
-                            "CookingAssistant",
+                            "Cooking Assistant",
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
