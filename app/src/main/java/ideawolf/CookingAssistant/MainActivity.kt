@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            defaultUI()
+            HomePage()
         }
     }
 }
@@ -47,16 +47,7 @@ fun Greeting(name: String) {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    CookingAssistantTheme {
-        defaultUI()
-    }
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-fun defaultUI() {
+fun HomePage() {
     var selectedItem by remember { mutableStateOf(0) }
     CookingAssistantTheme {
         Scaffold(
@@ -134,4 +125,36 @@ fun defaultUI() {
             }
         )
     }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@Preview(showBackground = true)
+@Composable
+fun ready_page() {
+    defaultUI()
+}
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@Composable
+fun defaultUI() {
+    CookingAssistantTheme {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            "Cooking Assistant",
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                )
+            },
+            bottomBar = {
+
+            },
+            content = {
+                
+            }
+
 }
