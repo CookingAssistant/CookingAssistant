@@ -22,65 +22,65 @@ import androidx.compose.ui.unit.dp
 
 import ideawolf.CookingAssistant.ui.theme.CookingAssistantTheme
 
-
-@Composable
-fun navigationBar(){
-    var selectedItem by remember{mutableStateOf(0)}
-    NavigationBar{
-        NavigationBarItem(
-            icon={Icon(Icons.Filled.Home,contentDescription="Go Home")},
-            label={Text("Home")},
-            selected=selectedItem==0,
-            onClick={selectedItem=0}
-        )
-        NavigationBarItem(
-            icon={Icon(Icons.Filled.Info,contentDescription="Let's Cook")}, // 요리 아이콘 변경 필요
-            label={Text("Cook")},
-            selected=selectedItem==1,
-            onClick={selectedItem=1}
-        )
-        NavigationBarItem(
-            icon={Icon(Icons.Filled.Add,contentDescription="Add Recipe")},
-            label={Text("Add")},
-            selected=selectedItem==2,
-            onClick={selectedItem=2}
-        )
-        NavigationBarItem(
-            icon={Icon(Icons.Filled.MoreVert,contentDescription="More")},
-            label={Text("More")},
-            selected=selectedItem==3,
-            onClick={selectedItem=3}
-        )
-    }
-}
+//
+//@Composable
+//fun navigationBar(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit) {
+//    var selectedItem by remember { mutableStateOf(0) }
+//    NavigationBar {
+//        NavigationBarItem(
+//            icon = { Icon(Icons.Filled.Home, contentDescription = "Go Home") },
+//            label = { Text("Home") },
+//            selected = selectedItem == 0,
+//            onClick = {
+//                onNavigateToHome()
+//                selectedItem = 1;
+//            }
+//        )
+//        NavigationBarItem(
+//            icon = { Icon(Icons.Filled.Info, contentDescription = "Let's Cook") }, // 요리 아이콘 변경 필요
+//            label = { Text("Cook") },
+//            selected = selectedItem == 1,
+//            onClick = {
+//                onNavigateToCooking()
+//                selectedItem = 0;
+//            }
+//        )
+//        NavigationBarItem(
+//            icon = { Icon(Icons.Filled.MoreVert, contentDescription = "More") },
+//            label = { Text("More") },
+//            selected = selectedItem == 2,
+//            onClick = { selectedItem = 2 }
+//        )
+//    }
+//}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun topBar(){
+fun topBar() {
     TopAppBar(
-        title={
+        title = {
             Text(
                 "Cooking Assistant",
-                maxLines=1,
-                overflow=TextOverflow.Ellipsis
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         },
-        actions={
-            IconButton(onClick={ /* doSomething() */ }){
-                Icon(
-                    imageVector=Icons.Filled.Search,
-                    contentDescription="Localized description"
-                )
-            }
-        },
-        navigationIcon={
-            IconButton(onClick={ /* doSomething() */ }){
-                Icon(
-                    imageVector=Icons.Filled.Menu,
-                    contentDescription="Localized description"
-                )
-            }
-        },
+//        actions = {
+//            IconButton(onClick = { /* doSomething() */ }) {
+//                Icon(
+//                    imageVector = Icons.Filled.Search,
+//                    contentDescription = "Localized description"
+//                )
+//            }
+//        },
+//        navigationIcon = {
+//            IconButton(onClick = { /* doSomething() */ }) {
+//                Icon(
+//                    imageVector = Icons.Filled.Menu,
+//                    contentDescription = "Localized description"
+//                )
+//            }
+//        },
 //                                scrollBehavior = scrollBehavior
     )
 }
