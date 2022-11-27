@@ -1,3 +1,6 @@
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -6,7 +9,8 @@ class Recipe(var title: String, var material: ArrayList<String>, var description
     var done = false
 
     override fun run(){
-        Thread.sleep(duration/100)
+        super.run()
+        SystemClock.sleep(duration/10)
         this.done = true
         //println("$title end !")
 
