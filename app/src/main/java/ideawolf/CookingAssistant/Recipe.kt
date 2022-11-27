@@ -11,14 +11,13 @@ class Recipe(var title: String, var material: ArrayList<String>, var description
 
     override fun onTick(millisUntilFinished: Long) {
         println("until : $millisUntilFinished")
-        this.done = true;
         isRunning = true
         //rest of code
     }
 
     override fun onFinish() {
         isRunning = false
-
+        this.done = true;
     }
 
 }
