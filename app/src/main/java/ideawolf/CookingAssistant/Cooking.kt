@@ -19,7 +19,7 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
     var did: Int = 0
     while (did < num_of_recipe) {
         for (c in Cuisines) {
-            println(c)
+            //println(c)
             for (i in 0 until c.recipe.size) {
 
                 if (i == 0 && !c.recipe[i].isAlive && !c.recipe[i].done) {
