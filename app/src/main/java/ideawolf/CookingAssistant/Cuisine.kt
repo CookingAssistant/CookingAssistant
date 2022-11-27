@@ -3,8 +3,10 @@ class Cuisine(var name: String, var description: String, var recipe: ArrayList<R
     var material = ArrayList<String>();
     init {
         for (x in recipe){
-           this.material.addAll(x.material)
+            this.material.addAll(x.material)
         }
+
+
     }
 
 
@@ -22,6 +24,8 @@ class Cuisine(var name: String, var description: String, var recipe: ArrayList<R
         }
 
     }
+
+
 
 
 
