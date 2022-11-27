@@ -10,7 +10,7 @@ class Recipe(var title: String, var material: ArrayList<String>, var description
 
     override fun run(){
         super.run()
-        SystemClock.sleep(duration/10)
+        SystemClock.sleep(duration/5)
         this.done = true
         //println("$title end !")
 

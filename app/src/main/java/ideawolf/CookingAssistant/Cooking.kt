@@ -17,6 +17,7 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
 //            }
 
     var did: Int = 0
+    IsEnd = false
 
     Thread(Runnable {
         while (did < num_of_recipe) {
@@ -25,14 +26,36 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
 
                     if (i == 0 && !c.recipe[i].isAlive && !c.recipe[i].done) {
                         println(c.recipe[i].description)
+//                        process_description.value = c.recipe[i].description
+                        process_list.add(c.recipe[i])
+                        processing_food_list.add(c)
+
+                        if(IsWaitNext){
+                            IsWaitNext = false
+                            process_description.value = process_list[proc_idx].description
+                            process_food.value = "${processing_food_list[proc_idx].name}"
+
+                            proc_idx++
+                        }
+
                         c.recipe[i].start()
                         did++
 
 
                     } else if (i > 0){
                         if(c.recipe[i - 1].done && !c.recipe[i].isAlive && !c.recipe[i].done){
-
                             println(c.recipe[i].description)
+//                            process_description.value = c.recipe[i].description
+                            process_list.add(c.recipe[i])
+                            processing_food_list.add(c)
+
+                            if(IsWaitNext){
+                                IsWaitNext = false
+                                process_description.value = process_list[proc_idx].description
+                                process_food.value = "${processing_food_list[proc_idx].name}"
+                                proc_idx++
+                            }
+
                             c.recipe[i].start()
                             did++
                         }
@@ -40,7 +63,8 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
                 }
             }
         }
-        println("요리가 완성되었습니다 ~")
+
+        IsEnd = true
     }).start()
 
 }

@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,84 +33,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ideawolf.CookingAssistant.ui.theme.CookingAssistantTheme
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.util.concurrent.TimeUnit
-
-
-
-var ramen_recipe = ArrayList<Recipe>();
-
-var ramen_recipe1 = Recipe(
-    title = "물 끓이기",
-    material = arrayListOf<String>("물500ml", "냄비"),
-    description = "물 550ml를 냄비에 받은 후 4분동안 끓이세요",
-    duration = TimeUnit.MINUTES.toMillis(4),
-    canDoOther = true,
-    );
-
-var ramen_recipe2 = Recipe(
-    title = "재료 넣기",
-    material = arrayListOf<String>("라면 1봉지"),
-    description = "면, 스프, 후레이크를 넣어주세요. 4분 더 끓이신 후 완성입니다.",
-    duration = TimeUnit.MINUTES.toMillis(4),
-    canDoOther = false,
-    );
-
-var ramen = Cuisine(name = "라면", description = "간편하게 먹는 라면입니다", recipe = ramen_recipe);
-
-
-var steak_recipe = ArrayList<Recipe>();
-
-var steak_recipe1 = Recipe(
-    title = "후라이팬 예열하기",
-    material = arrayListOf<String>("후라이펜", "소량의 기름"),
-    description = "후라이팬에 기름을 두리고 1분간 예열하세요",
-    duration = TimeUnit.MINUTES.toMillis(1),
-    canDoOther = true,
-    );
-
-var steak_recipe2 = Recipe(
-    title = "소고기 굽기",
-    material = arrayListOf<String>("소고기 400g"),
-    description = "후라이팬에 소고기를 올리고 취향에 맞게 (2분 - 레어, 3분 미디엄 레어, 4분 미디엄) 익혀주시면 완성입니다.",
-    duration = TimeUnit.MINUTES.toMillis(4),
-    canDoOther = false,
-    );
-
-
-var steak = Cuisine(name = "스테이크", description = "소고기 구이입니다", recipe = steak_recipe);
-
-
-var egg_fried_rice_recipe = ArrayList<Recipe>();
-
-var egg_fried_rice_recipe1 = Recipe(
-    title = "후라이팬 예열하기",
-    material = arrayListOf<String>("후라이펜", "소량의 기름"),
-    description = "후라이팬에 기름을 두리고 1분간 예열하세요",
-    duration = TimeUnit.MINUTES.toMillis(1),
-    canDoOther = true,
-    );
-var egg_fried_rice_recipe2 = Recipe(
-    title = "계란 익히기",
-    material = arrayListOf<String>("계란 2알"),
-    description = "후라이팬에서 계란을 튀기듯이 2분간 익혀주세요",
-    duration = TimeUnit.MINUTES.toMillis(2),
-    canDoOther = false,
-    );
-var egg_fried_rice_recipe3 = Recipe(
-    title = "밥과 계란 볶기",
-    material = arrayListOf<String>("밥 1공기"),
-    description = "후라이팬에 밥을 넣고 계란과 함께 3분정도 볶아주시면 완성입니다.",
-    duration = TimeUnit.MINUTES.toMillis(3),
-    canDoOther = false,
-    );
-
-var egg_fried_rice = Cuisine(name = "계란볶음밥", description = "계란과 밥을 볶은 요리입니다", recipe = egg_fried_rice_recipe);
-
 
 var cookList = ArrayList<Cuisine>()
 var cart = ArrayList<Cuisine>()
+
 
 @Composable
 fun AppNavHost(
@@ -151,7 +77,8 @@ fun AppNavHost(
         }
     }
 }
-fun saveRecipes(){
+
+fun saveRecipes() {
     var jsonString: String = """
         [
             {
@@ -241,8 +168,7 @@ fun saveRecipes(){
         ]
     """.trimIndent()
 
-    var cookList2 = Json.decodeFromString<ArrayList<Cuisine>>(jsonString)
-    cookList = cookList2
+    cookList = Json.decodeFromString<ArrayList<Cuisine>>(jsonString)
     println(cookList)
 }
 
@@ -254,14 +180,17 @@ class MainActivity : ComponentActivity() {
             AppNavHost()
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        saveRecipes() // reset recipes
+    }
 }
 
 @Preview
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun HomePage(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
-    saveRecipes() // reset recipes
-
     CookingAssistantTheme {
         Scaffold(
             floatingActionButton = {
@@ -324,11 +253,22 @@ fun HomePage(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, sele
     }
 }
 
+val process_list = ArrayList<Recipe>()
+val processing_food_list = ArrayList<Cuisine>()
+val process_description = mutableStateOf("Process Description")
+val process_food = mutableStateOf("Cuisine Name")
 
+var IsWaitNext: Boolean = false
+var proc_idx: Int = 0
+var IsEnd:Boolean=false
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Preview(showBackground = true)
 @Composable
 fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
+    val buttonText = remember { mutableStateOf("Start") }
+    var proc_level: Int = 0
+    process_description.value = "Process Description"
+    process_food.value = "Cuisine Name"
     CookingAssistantTheme {
         Scaffold(
             topBar = {
@@ -389,13 +329,13 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text(
-                            "Expected Remaining Time:",
+                            "Current Cuisine:",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                         Spacer(Modifier.padding(2.dp))
                         Text(
-                            "00 : 00",
+                            process_food.value,
                             fontSize = 18.sp,
                         )
                     }
@@ -410,16 +350,40 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            "Process Name Lorem ipsum  Lorem ipsum  Lorem ipsum  Lorem ipsum ",
+                            process_description.value,
                             fontSize = 18.sp,
                             textAlign = TextAlign.Center
                         )
                     }
                     Button(onClick = {
-                        cook(cart)
-                    }) {
-                        Text("Start")
+                        if (proc_level == 0) {
+                            cook(cart)
+                            buttonText.value = "Next"
+                            proc_level = 1
+                            IsWaitNext = true
+                        } else if (proc_level > 0) {
+                            if (process_list.getOrNull(proc_idx) != null) {
+                                IsWaitNext = false
+                                process_description.value = "${process_list[proc_idx].description}"
+                                process_food.value = "${processing_food_list[proc_idx].name}"
+                                proc_idx++
+                            } else if(!IsEnd){
+                                process_description.value = "잠시만 기다려주세요."
+                                process_food.value = "잠시만 기다려주세요."
 
+                                IsWaitNext = true
+                            } else {
+                                process_description.value = "모든 요리가 완성되었습니다."
+                                process_food.value = "완성"
+
+                                buttonText.value = "END"
+
+                                cart.clear()
+                                saveRecipes()
+                            }
+                        }
+                    }) {
+                        Text(buttonText.value)
                     }
                 }
             },
