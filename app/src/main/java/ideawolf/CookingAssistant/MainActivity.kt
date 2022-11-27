@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -325,7 +326,17 @@ fun FoodCardInHome(cuisine: Cuisine) {
 
     Card(
         Modifier
-            .height(100.dp),
+            .height(100.dp)
+            .clickable {
+                if (!isChecked.value) {
+                    cart.add(cuisine)
+                    isChecked.value = cart.contains(cuisine)
+                } else {
+                    cart.remove(cuisine)
+                    isChecked.value = cart.contains(cuisine)
+                }
+
+            },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
