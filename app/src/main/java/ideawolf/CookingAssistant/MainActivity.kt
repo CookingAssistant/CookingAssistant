@@ -267,8 +267,8 @@ var IsEnd:Boolean=false
 fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
     val buttonText = remember { mutableStateOf("Start") }
     var proc_level: Int = 0
-    process_description.value = "Process Description"
-    process_food.value = "Cuisine Name"
+    process_description.value = "-"
+    process_food.value = "-"
     CookingAssistantTheme {
         Scaffold(
             topBar = {
