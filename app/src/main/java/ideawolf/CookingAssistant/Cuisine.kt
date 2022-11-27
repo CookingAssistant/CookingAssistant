@@ -1,4 +1,7 @@
-class Cuisine(var name: String, var description: String, var recipe: ArrayList<Recipe>){
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Cuisine(var name: String, var description: String, var recipe: ArrayList<Recipe>){
 
     var material = ArrayList<String>();
     init {

@@ -33,7 +33,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ideawolf.CookingAssistant.ui.theme.CookingAssistantTheme
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
+
+
 
 var ramen_recipe = ArrayList<Recipe>();
 
@@ -147,35 +151,20 @@ fun AppNavHost(
     }
 }
 fun saveRecipes(){    
-    ramen_recipe1.left = null
-    ramen_recipe1.right = ramen_recipe2
+    
+    
 
-    ramen_recipe2.left = ramen_recipe1
-    ramen_recipe1.right = null
+    
+    
 
     ramen_recipe.clear()
     ramen_recipe.add(ramen_recipe1);
     ramen_recipe.add(ramen_recipe2);
 
 
-    steak_recipe1.left = null
-    steak_recipe1.right = steak_recipe2
-
-    steak_recipe2.left = steak_recipe1
-    steak_recipe2.right = null
-
     steak_recipe.clear()
     steak_recipe.add(steak_recipe1);
     steak_recipe.add(steak_recipe2);
-
-    egg_fried_rice_recipe1.left = null
-    egg_fried_rice_recipe1.right = egg_fried_rice_recipe2
-
-    egg_fried_rice_recipe2.left = egg_fried_rice_recipe1
-    egg_fried_rice_recipe2.right = egg_fried_rice_recipe3
-
-    egg_fried_rice_recipe3.left = egg_fried_rice_recipe2
-    egg_fried_rice_recipe3.right = null
 
 
 
@@ -188,6 +177,9 @@ fun saveRecipes(){
     cookList.add(ramen)
     cookList.add(steak)
     cookList.add(egg_fried_rice)
+
+    val cookJson = Json.encodeToString(cookList)
+    println(cookJson)
 }
 
 class MainActivity : ComponentActivity() {
@@ -205,6 +197,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun HomePage(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
     saveRecipes() // reset recipes
+
     CookingAssistantTheme {
         Scaffold(
             floatingActionButton = {
