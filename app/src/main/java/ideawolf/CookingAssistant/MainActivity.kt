@@ -147,6 +147,7 @@ fun AppNavHost(
     }
 }
 fun saveRecipes(){
+    cookList.clear()
 
     ramen_recipe1.left = null
     ramen_recipe1.right = ramen_recipe2
