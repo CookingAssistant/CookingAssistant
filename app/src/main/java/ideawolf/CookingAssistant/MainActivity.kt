@@ -146,7 +146,7 @@ fun AppNavHost(
         }
     }
 }
-fun saveRecipes(){
+fun saveRecipes(){    
     ramen_recipe1.left = null
     ramen_recipe1.right = ramen_recipe2
 
