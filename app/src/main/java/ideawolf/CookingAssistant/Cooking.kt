@@ -8,28 +8,25 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
     var num_of_recipe: Int = 0
 
     for(c in Cuisines) {
-        for(r in c.recipe){
-            num_of_recipe++
+            num_of_recipe = c.recipe.size + num_of_recipe
         }
 //            for(recipe in c.recipe){
 //                recipe.start()
 //            }
-    }
 
     var did: Int = 0
     while (did < num_of_recipe) {
         for (c in Cuisines) {
             for (i in 0 until c.recipe.size) {
 
-
-                if (i == 0 && !c.recipe[i].isRunning && !c.recipe[i].done) {
+                if (i == 0 && !c.recipe[i].isAlive && !c.recipe[i].done) {
                     println(c.recipe[i].description)
                     c.recipe[i].start()
                     did++
 
 
                 } else if (i > 0){
-                    if(c.recipe[i - 1].done && !c.recipe[i].isRunning && !c.recipe[i].done){
+                    if(c.recipe[i - 1].done && !c.recipe[i].isAlive && !c.recipe[i].done){
 
                         println(c.recipe[i].description)
                         c.recipe[i].start()

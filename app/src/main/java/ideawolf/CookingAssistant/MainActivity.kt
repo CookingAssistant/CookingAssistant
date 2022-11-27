@@ -146,15 +146,14 @@ fun AppNavHost(
         }
     }
 }
-fun saveRecipes(){
-    cookList.clear()
-
+fun saveRecipes(){    
     ramen_recipe1.left = null
     ramen_recipe1.right = ramen_recipe2
 
     ramen_recipe2.left = ramen_recipe1
     ramen_recipe1.right = null
 
+    ramen_recipe.clear()
     ramen_recipe.add(ramen_recipe1);
     ramen_recipe.add(ramen_recipe2);
 
@@ -165,7 +164,7 @@ fun saveRecipes(){
     steak_recipe2.left = steak_recipe1
     steak_recipe2.right = null
 
-
+    steak_recipe.clear()
     steak_recipe.add(steak_recipe1);
     steak_recipe.add(steak_recipe2);
 
@@ -180,10 +179,12 @@ fun saveRecipes(){
 
 
 
+    egg_fried_rice_recipe.clear()
     egg_fried_rice_recipe.add(egg_fried_rice_recipe1);
     egg_fried_rice_recipe.add(egg_fried_rice_recipe2);
     egg_fried_rice_recipe.add(egg_fried_rice_recipe3);
 
+    cookList.clear()
     cookList.add(ramen)
     cookList.add(steak)
     cookList.add(egg_fried_rice)
