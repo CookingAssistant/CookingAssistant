@@ -6,7 +6,7 @@ class Recipe(var title: String, var material: ArrayList<String>, var description
     var done = false
 
     override fun run(){
-        Thread.sleep(duration/10)
+        Thread.sleep(duration/100)
         this.done = true
         //println("$title end !")
 
