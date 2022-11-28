@@ -2,6 +2,7 @@ package ideawolf.CookingAssistant
 
 import Cuisine
 import Recipe
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,13 +28,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ideawolf.CookingAssistant.CookingAssistant.getAppContext
 import ideawolf.CookingAssistant.ui.theme.CookingAssistantTheme
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+
 
 var cookList = ArrayList<Cuisine>()
 var cart = ArrayList<Cuisine>()
@@ -82,7 +86,7 @@ fun saveRecipes() {
     var jsonString: String = """
         [
             {
-                "name": "라면",
+                "name": "Ramen",
                 "description": "간편하게 먹는 라면입니다",
                 "recipe": [
                     {
@@ -754,8 +758,9 @@ val process_food = mutableStateOf("Cuisine Name")
 
 var IsWaitNext: Boolean = false
 var proc_idx: Int = 0
-var IsEnd:Boolean=false
+var IsEnd: Boolean = false
 var proc_level: Int = 0
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Preview(showBackground = true)
 @Composable
@@ -861,7 +866,7 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                                 process_description.value = "${process_list[proc_idx].description}"
                                 process_food.value = "${processing_food_list[proc_idx].name}"
                                 proc_idx++
-                            } else if(!IsEnd){
+                            } else if (!IsEnd) {
                                 process_description.value = "잠시만 기다려주세요."
                                 process_food.value = "잠시만 기다려주세요."
 
@@ -891,10 +896,20 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
 fun defaultUI() {
 }
 
+fun getDrawableIntByFileName(context: Context, fileName: String): Int {
+    return context.resources.getIdentifier(fileName, "drawable", context.packageName)
+}
+
 @Preview
 @Composable
 fun FoodCardInProcess(cuisine: Cuisine) {
     var shape = RoundedCornerShape(9.dp)
+    val food_logo = "@drawable/food_logo_${(cuisine.name).lowercase()}"
+    var drawableInt = getDrawableIntByFileName(context = getAppContext() , fileName = food_logo)
+    if(drawableInt == 0){
+        drawableInt = R.drawable.default_image
+    }
+
     Card(
         Modifier.size(width = 100.dp, height = 150.dp),
         colors = CardDefaults.cardColors(
@@ -915,7 +930,7 @@ fun FoodCardInProcess(cuisine: Cuisine) {
                     .align(alignment = Alignment.CenterHorizontally)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.info_image_box),
+                    painter = painterResource(id = drawableInt),
                     contentDescription = cuisine.description,
                     Modifier.fillMaxSize(),
                     tint = Color.Unspecified,
@@ -928,13 +943,18 @@ fun FoodCardInProcess(cuisine: Cuisine) {
     }
 }
 
-
 @Preview
 @Composable
 fun FoodCardInHome(cuisine: Cuisine) {
     var shape = RoundedCornerShape(9.dp)
     val isChecked = remember { mutableStateOf(false) }
 
+    val food_logo = "@drawable/food_logo_${(cuisine.name).lowercase()}"
+    var drawableInt = getDrawableIntByFileName(context = getAppContext() , fileName = food_logo)
+
+    if(drawableInt == 0){
+        drawableInt = R.drawable.default_image
+    }
     isChecked.value = cart.contains(cuisine)
 
     Card(
@@ -966,7 +986,7 @@ fun FoodCardInHome(cuisine: Cuisine) {
                     .border(1.5.dp, Color(0xEAEAEA), shape = shape)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.info_image_box),
+                    painter = painterResource(id = drawableInt),
                     contentDescription = null,
                     Modifier.fillMaxSize(),
                     tint = Color.Unspecified,
