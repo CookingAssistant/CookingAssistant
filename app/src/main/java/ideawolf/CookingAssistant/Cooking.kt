@@ -64,8 +64,9 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
             }
         }
 
-        proc_level = 0
         IsEnd = true
+
+        println("완성입니다.")
     }).start()
 
 }

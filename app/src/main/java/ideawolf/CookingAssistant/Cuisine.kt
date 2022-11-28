@@ -1,7 +1,9 @@
+import android.graphics.drawable.Drawable
 import kotlinx.serialization.Serializable
+import androidx.annotation.DrawableRes
 
 @Serializable
-data class Cuisine(var name: String, var description: String, var recipe: ArrayList<Recipe>){
+class Cuisine(var name: String, var description: String, var recipe: ArrayList<Recipe>, @DrawableRes var Icon: Int){
 
     var material = ArrayList<String>();
     init {

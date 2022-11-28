@@ -874,6 +874,7 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
 
                                 cart.clear()
                                 saveRecipes()
+                                proc_level = 0
                             }
                         }
                     }) {
