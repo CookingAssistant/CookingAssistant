@@ -23,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -695,7 +697,7 @@ fun HomePage(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, sele
         Scaffold(
             floatingActionButton = {
                 ExtendedFloatingActionButton(
-                    icon = { Icon(Icons.Filled.Build, "") },
+                    icon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.cooking_icon), "Cook") },
                     text = { Text("Cook") },
                     onClick = onNavigateToCooking,
                     elevation = FloatingActionButtonDefaults.elevation(8.dp)
@@ -729,7 +731,7 @@ fun HomePage(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, sele
                     NavigationBarItem(
                         icon = {
                             Icon(
-                                Icons.Filled.Info,
+                                imageVector = ImageVector.vectorResource(R.drawable.cooking_icon),
                                 contentDescription = "Let's Cook"
                             )
                         }, // 요리 아이콘 변경 필요
@@ -802,7 +804,7 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                     NavigationBarItem(
                         icon = {
                             Icon(
-                                Icons.Filled.Info,
+                                imageVector = ImageVector.vectorResource(R.drawable.cooking_icon),
                                 contentDescription = "Let's Cook"
                             )
                         }, // 요리 아이콘 변경 필요
@@ -949,7 +951,7 @@ fun FoodCardInProcess(cuisine: Cuisine) {
         drawableInt = R.drawable.default_image
     }
 
-    if(process_percent[cuisine] == null){
+    if (process_percent[cuisine] == null) {
         process_percent[cuisine] = 0
     }
 
