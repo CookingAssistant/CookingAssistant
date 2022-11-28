@@ -113,7 +113,7 @@ fun saveRecipes() {
                 ]
             },
             {
-                "name": "스테이크",
+                "name": "Steak",
                 "description": "소고기 구이입니다",
                 "recipe": [
                     {
@@ -138,7 +138,7 @@ fun saveRecipes() {
                 ]
             },
             {
-                "name": "계란볶음밥",
+                "name": "Egg fried rice",
                 "description": "계란과 밥을 볶은 요리입니다",
                 "recipe": [
                     {
@@ -172,7 +172,7 @@ fun saveRecipes() {
                 ]
             },
             {
-                "name": "콩나물무침",
+                "name": "Seasoned bean sprouts",
                 "description": "매콤새콤한 콩나물무침입니다.",
                 "recipe": [
                     {
@@ -262,7 +262,7 @@ fun saveRecipes() {
                 ]
             },
             {
-                "name": "순두부 찌개",
+                "name": "Soft tofu stew",
                 "description": "얼큰한 순두부찌개입니다.",
                 "recipe": [
                     {
@@ -387,7 +387,7 @@ fun saveRecipes() {
                 ]
             },
             {
-                "name": "닭볶음탕",
+                "name": "Braised Spicy Chicken",
                 "description": "매콤한 닭볶음탕입니다",
                 "recipe": [
                     {
@@ -501,7 +501,7 @@ fun saveRecipes() {
                 ]
             },
             {
-                "name": "돼지고기 김치찌개",
+                "name": "Kimchi stew with pork",
                 "description": "얼큰한 김치찌개 입니다",
                 "recipe": [
                     {
@@ -612,7 +612,7 @@ fun saveRecipes() {
                 ]
             },
             {
-                "name": "된장찌개",
+                "name": "Bean paste stew",
                 "description": "시원한 된장찌개 입니다",
                 "recipe": [
                     {
@@ -932,11 +932,6 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-fun defaultUI() {
-}
-
 fun getDrawableIntByFileName(context: Context, fileName: String): Int {
     return context.resources.getIdentifier(fileName, "drawable", context.packageName)
 }
@@ -947,7 +942,8 @@ var process_percent = mutableStateMapOf<Cuisine, Int>()
 @Composable
 fun FoodCardInProcess(cuisine: Cuisine) {
     var shape = RoundedCornerShape(9.dp)
-    val food_logo = "@drawable/food_logo_${(cuisine.name).lowercase()}"
+    var name_to_filename = cuisine.name.replace(" ", "_")
+    val food_logo = "@drawable/food_logo_${(name_to_filename).lowercase()}"
     var drawableInt = getDrawableIntByFileName(context = getAppContext(), fileName = food_logo)
     if (drawableInt == 0) {
         drawableInt = R.drawable.default_image
