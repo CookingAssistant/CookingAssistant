@@ -1001,7 +1001,8 @@ fun FoodCardInHome(cuisine: Cuisine) {
     var shape = RoundedCornerShape(9.dp)
     val isChecked = remember { mutableStateOf(false) }
 
-    val food_logo = "@drawable/food_logo_${(cuisine.name).lowercase()}"
+    var name_to_filename = cuisine.name.replace(" ", "_")
+    val food_logo = "@drawable/food_logo_${(name_to_filename).lowercase()}"
     var drawableInt = getDrawableIntByFileName(context = getAppContext(), fileName = food_logo)
 
     if (drawableInt == 0) {
