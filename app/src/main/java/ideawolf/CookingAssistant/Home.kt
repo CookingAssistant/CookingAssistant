@@ -87,7 +87,109 @@ fun AppNavHost(
 }
 
 fun saveRecipes() {
-    var jsonString: String = """
+    cookList = Json.decodeFromString<ArrayList<Cuisine>>(jsonString)
+    println(cookList)
+}
+
+class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            AppNavHost()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        saveRecipes() // reset recipes
+    }
+}
+
+@Preview
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@Composable
+fun HomePage(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
+    CookingAssistantTheme {
+        Scaffold(
+            floatingActionButton = {
+                ExtendedFloatingActionButton(
+                    icon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.cooking_icon), "Cook") },
+                    text = { Text("Cook") },
+                    onClick = onNavigateToCooking,
+                    elevation = FloatingActionButtonDefaults.elevation(8.dp)
+                )
+
+            },
+            topBar = {
+                topBar()
+            },
+            content = { innerPadding ->
+                LazyColumn(
+                    // consume insets as scaffold doesn't do it by default
+                    modifier = Modifier.consumedWindowInsets(innerPadding),
+                    contentPadding = innerPadding
+                ) {
+                    items(cookList.size) { selectedItem ->
+                        FoodCardInHome(cuisine = cookList[selectedItem])
+                    }
+                }
+            },
+            bottomBar = {
+                NavigationBar {
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Filled.Home, contentDescription = "Go Home") },
+                        label = { Text("Home") },
+                        selected = selectedItem == 0,
+                        onClick = {
+                            onNavigateToHome()
+                        }
+                    )
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(R.drawable.cooking_icon),
+                                contentDescription = "Let's Cook"
+                            )
+                        }, // 요리 아이콘 변경 필요
+                        label = { Text("Cook") },
+                        selected = selectedItem == 1,
+                        onClick = {
+                            onNavigateToCooking()
+                        }
+                    )
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Filled.MoreVert, contentDescription = "More") },
+                        label = { Text("More") },
+                        selected = selectedItem == 2,
+                        onClick = {
+                            onNavigateToHome()
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+val process_list = ArrayList<Recipe>()
+val processing_food_list = ArrayList<Cuisine>()
+val process_description = mutableStateOf("Process Description")
+val process_food = mutableStateOf("Cuisine Name")
+val process_material = mutableStateOf("Material List")
+
+var IsWaitNext: Boolean = false
+var proc_idx: Int = 0
+var IsEnd: Boolean = false
+var proc_level: Int = 0
+
+fun getDrawableIntByFileName(context: Context, fileName: String): Int {
+    return context.resources.getIdentifier(fileName, "drawable", context.packageName)
+}
+
+var process_percent = mutableStateMapOf<Cuisine, Int>()
+
+var jsonString: String = """
         [
             {
                 "name": "Ramen",
@@ -668,412 +770,4 @@ fun saveRecipes() {
                 ]
             }
         ]
-    """.trimIndent()
-
-    cookList = Json.decodeFromString<ArrayList<Cuisine>>(jsonString)
-    println(cookList)
-}
-
-class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            AppNavHost()
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        saveRecipes() // reset recipes
-    }
-}
-
-@Preview
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-fun HomePage(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
-    CookingAssistantTheme {
-        Scaffold(
-            floatingActionButton = {
-                ExtendedFloatingActionButton(
-                    icon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.cooking_icon), "Cook") },
-                    text = { Text("Cook") },
-                    onClick = onNavigateToCooking,
-                    elevation = FloatingActionButtonDefaults.elevation(8.dp)
-                )
-
-            },
-            topBar = {
-                topBar()
-            },
-            content = { innerPadding ->
-                LazyColumn(
-                    // consume insets as scaffold doesn't do it by default
-                    modifier = Modifier.consumedWindowInsets(innerPadding),
-                    contentPadding = innerPadding
-                ) {
-                    items(cookList.size) { selectedItem ->
-                        FoodCardInHome(cuisine = cookList[selectedItem])
-                    }
-                }
-            },
-            bottomBar = {
-                NavigationBar {
-                    NavigationBarItem(
-                        icon = { Icon(Icons.Filled.Home, contentDescription = "Go Home") },
-                        label = { Text("Home") },
-                        selected = selectedItem == 0,
-                        onClick = {
-                            onNavigateToHome()
-                        }
-                    )
-                    NavigationBarItem(
-                        icon = {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(R.drawable.cooking_icon),
-                                contentDescription = "Let's Cook"
-                            )
-                        }, // 요리 아이콘 변경 필요
-                        label = { Text("Cook") },
-                        selected = selectedItem == 1,
-                        onClick = {
-                            onNavigateToCooking()
-                        }
-                    )
-                    NavigationBarItem(
-                        icon = { Icon(Icons.Filled.MoreVert, contentDescription = "More") },
-                        label = { Text("More") },
-                        selected = selectedItem == 2,
-                        onClick = {
-                            onNavigateToHome()
-                        }
-                    )
-                }
-            }
-        )
-    }
-}
-
-val process_list = ArrayList<Recipe>()
-val processing_food_list = ArrayList<Cuisine>()
-val process_description = mutableStateOf("Process Description")
-val process_food = mutableStateOf("Cuisine Name")
-val process_material = mutableStateOf("Material List")
-
-var IsWaitNext: Boolean = false
-var proc_idx: Int = 0
-var IsEnd: Boolean = false
-var proc_level: Int = 0
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Preview(showBackground = true)
-@Composable
-fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
-    val buttonText = remember { mutableStateOf("Start") }
-    process_description.value = "재료 준비"
-    process_food.value = "모든 요리"
-
-
-    var materials = ArrayList<String>()
-    for (cuisine in cart) {
-        for (recipe in cuisine.recipe) {
-            for (material in recipe.material) {
-                materials.add(material)
-            }
-        }
-    }
-
-    process_material.value = materials.joinToString(separator = ", ")
-
-    CookingAssistantTheme {
-        Scaffold(
-            topBar = {
-                topBar()
-            },
-            bottomBar = {
-                NavigationBar {
-                    NavigationBarItem(
-                        icon = { Icon(Icons.Filled.Home, contentDescription = "Go Home") },
-                        label = { Text("Home") },
-                        selected = selectedItem == 0,
-                        onClick = {
-                            onNavigateToHome()
-                        }
-                    )
-                    NavigationBarItem(
-                        icon = {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(R.drawable.cooking_icon),
-                                contentDescription = "Let's Cook"
-                            )
-                        }, // 요리 아이콘 변경 필요
-                        label = { Text("Cook") },
-                        selected = selectedItem == 1,
-                        onClick = {
-                            onNavigateToCooking()
-                        }
-                    )
-                    NavigationBarItem(
-                        icon = { Icon(Icons.Filled.MoreVert, contentDescription = "More") },
-                        label = { Text("More") },
-                        selected = selectedItem == 2,
-                        onClick = {
-                            onNavigateToHome()
-                        }
-                    )
-                }
-            },
-            content = { padding ->
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding)
-                        .verticalScroll(rememberScrollState()),
-                ) {
-                    LazyRow(
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {  // Selected Food
-                        items(cart.size) { selectedItem ->
-                            FoodCardInProcess(cuisine = cart[selectedItem])
-                        }
-                    }
-                    Column(
-                        verticalArrangement = Arrangement.SpaceEvenly,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(
-                            "Current Cuisine:",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Spacer(Modifier.padding(2.dp))
-                        Text(
-                            process_food.value,
-                            fontSize = 14.sp,
-                        )
-                    }
-                    Column(
-                        verticalArrangement = Arrangement.SpaceEvenly,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(
-                            "Materials:",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            process_material.value,
-                            fontSize = 14.sp,
-                        )
-                    }
-                    Column(
-                        verticalArrangement = Arrangement.SpaceEvenly,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(
-                            "Current Process:",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            process_description.value,
-                            fontSize = 14.sp,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                    Button(onClick = {
-                        if (proc_level == 0) {
-
-                            cook(cart)
-                            buttonText.value = "Next"
-                            proc_level = 1
-                            IsWaitNext = true
-                        } else if (proc_level > 0) {
-                            if (process_list.getOrNull(proc_idx) != null) {
-                                IsWaitNext = false
-                                process_description.value = "${process_list[proc_idx].description}"
-                                process_food.value = "${processing_food_list[proc_idx].name}"
-
-
-                                for (curr_recipe in processing_food_list[proc_idx].recipe) {
-                                    process_material.value =
-                                        curr_recipe.material.joinToString(separator = ", ")
-                                }
-
-                                proc_idx++
-                            } else if (!IsEnd) {
-                                process_description.value = "-"
-                                process_food.value = "잠시만 기다려주세요."
-                                process_material.value = "-"
-
-                                IsWaitNext = true
-                            } else {
-                                process_description.value = "모든 요리가 완성되었습니다."
-                                process_food.value = "완성"
-
-                                buttonText.value = "END"
-
-                                cart.clear()
-                                saveRecipes()
-                                proc_level = 0
-                            }
-                        }
-                    }) {
-                        Text(buttonText.value)
-                    }
-                }
-            },
-        )
-    }
-}
-
-fun getDrawableIntByFileName(context: Context, fileName: String): Int {
-    return context.resources.getIdentifier(fileName, "drawable", context.packageName)
-}
-
-var process_percent = mutableStateMapOf<Cuisine, Int>()
-
-@Preview
-@Composable
-fun FoodCardInProcess(cuisine: Cuisine) {
-    var shape = RoundedCornerShape(9.dp)
-    var name_to_filename = cuisine.name.replace(" ", "_")
-    val food_logo = "@drawable/food_logo_${(name_to_filename).lowercase()}"
-    var drawableInt = getDrawableIntByFileName(context = getAppContext(), fileName = food_logo)
-    if (drawableInt == 0) {
-        drawableInt = R.drawable.default_image
-    }
-
-    if (process_percent[cuisine] == null) {
-        process_percent[cuisine] = 0
-    }
-
-    Card(
-        Modifier.size(width = 100.dp, height = 150.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
-    ) {
-        Box(
-            modifier = Modifier
-                .size(98.dp)
-                .clip(shape)
-                .padding(horizontal = 5.dp)
-                .border(1.5.dp, Color(0xEAEAEA), shape = shape)
-                .align(alignment = Alignment.CenterHorizontally)
-        ) {
-            Icon(
-                painter = painterResource(id = drawableInt),
-                contentDescription = cuisine.description,
-                Modifier.fillMaxSize(),
-                tint = Color.Unspecified,
-            )
-        }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .align(alignment = Alignment.CenterHorizontally)
-
-        ) {
-            Text(
-                cuisine.name,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                "${process_percent[cuisine]} %"
-            )
-        }
-        // Card content
-    }
-}
-
-@Preview
-@Composable
-fun FoodCardInHome(cuisine: Cuisine) {
-    var shape = RoundedCornerShape(9.dp)
-    val isChecked = remember { mutableStateOf(false) }
-
-    var name_to_filename = cuisine.name.replace(" ", "_")
-    val food_logo = "@drawable/food_logo_${(name_to_filename).lowercase()}"
-    var drawableInt = getDrawableIntByFileName(context = getAppContext(), fileName = food_logo)
-
-    if (drawableInt == 0) {
-        drawableInt = R.drawable.default_image
-    }
-    isChecked.value = cart.contains(cuisine)
-
-    Card(
-        Modifier
-            .height(100.dp)
-            .clickable {
-                if (!isChecked.value) {
-                    cart.add(cuisine)
-                    isChecked.value = cart.contains(cuisine)
-                } else {
-                    cart.remove(cuisine)
-                    isChecked.value = cart.contains(cuisine)
-                }
-
-            },
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.weight(1F)
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(98.dp)
-                    .clip(shape)
-                    .border(1.5.dp, Color(0xEAEAEA), shape = shape)
-            ) {
-                Icon(
-                    painter = painterResource(id = drawableInt),
-                    contentDescription = null,
-                    Modifier.fillMaxSize(),
-                    tint = Color.Unspecified,
-                )
-            }
-            Spacer(modifier = Modifier.size(5.dp))
-            Column(horizontalAlignment = Alignment.Start, modifier = Modifier.weight(0.8f)) {
-                Text(
-                    cuisine.name,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    cuisine.description,
-                    fontSize = 16.sp,
-                )
-            }
-            Spacer(modifier = Modifier.size(5.dp))
-            Box(Modifier.weight(0.2f)) {
-                Checkbox(checked = isChecked.value, onCheckedChange = { checked ->
-                    if (checked) {
-                        // Checked
-                        cart.add(cuisine)
-                        isChecked.value = cart.contains(cuisine)
-                    } else {
-                        //Unchecked
-                        cart.remove(cuisine)
-                        isChecked.value = cart.contains(cuisine)
-                    }
-                })
-            }
-        }
-        // Card content
-    }
-}
+    """
