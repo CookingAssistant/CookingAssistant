@@ -1,6 +1,7 @@
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import ideawolf.CookingAssistant.process_percent
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,6 +13,7 @@ class Recipe(var title: String, var material: ArrayList<String>, var description
         super.run()
         SystemClock.sleep(duration/5)
         this.done = true
+
         //println("$title end !")
 
     }

@@ -17,7 +17,7 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
     IsEnd = false
 
     Thread(Runnable {
-        while (did < num_of_recipe) {
+        while (!IsEnd) {
             for (c in Cuisines) {
                 for (i in 0 until c.recipe.size) {
 
@@ -77,11 +77,27 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
 
                 process_percent[c] = ((max / c.recipe.size.toDouble()) * 100).toInt()
             }
+            IsEnd = true
+            for (c in Cuisines) {
+                if(!c.recipe[c.recipe.size - 1].done){
+                    IsEnd = false
+                }
+
+                var max = 0
+                c.recipe.forEachIndexed { index, element ->
+                    if(element.done == true){
+                        if(max < index + 1){
+                            max = index + 1
+                        }
+                    }
+                }
+
+                process_percent[c] = ((max / c.recipe.size.toDouble()) * 100).toInt()
+            }
         }
 
-        IsEnd = true
+        process_description.value = "모든 요리가 완성되었습니다."
 
-        println("완성입니다.")
     }).start()
 
 }
