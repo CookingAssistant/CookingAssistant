@@ -757,6 +757,7 @@ val process_list = ArrayList<Recipe>()
 val processing_food_list = ArrayList<Cuisine>()
 val process_description = mutableStateOf("Process Description")
 val process_food = mutableStateOf("Cuisine Name")
+val process_material = mutableStateOf("Material List")
 
 var IsWaitNext: Boolean = false
 var proc_idx: Int = 0
@@ -768,8 +769,21 @@ var proc_level: Int = 0
 @Composable
 fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
     val buttonText = remember { mutableStateOf("Start") }
-    process_description.value = "-"
-    process_food.value = "-"
+    process_description.value = "재료 준비"
+    process_food.value = "모든 요리"
+
+
+    var materials = ArrayList<String>()
+    for (cuisine in cart) {
+        for (recipe in cuisine.recipe) {
+            for (material in recipe.material) {
+                materials.add(material)
+            }
+        }
+    }
+
+    process_material.value = materials.joinToString(separator = ", ")
+
     CookingAssistantTheme {
         Scaffold(
             topBar = {
@@ -814,7 +828,8 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                     verticalArrangement = Arrangement.SpaceEvenly,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(padding),
+                        .padding(padding)
+                        .verticalScroll(rememberScrollState()),
                 ) {
                     LazyRow(
                         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -831,13 +846,28 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                     ) {
                         Text(
                             "Current Cuisine:",
-                            fontSize = 18.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                         Spacer(Modifier.padding(2.dp))
                         Text(
                             process_food.value,
-                            fontSize = 18.sp,
+                            fontSize = 14.sp,
+                        )
+                    }
+                    Column(
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(
+                            "Materials:",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            process_material.value,
+                            fontSize = 14.sp,
                         )
                     }
                     Column(
@@ -847,17 +877,18 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                     ) {
                         Text(
                             "Current Process:",
-                            fontSize = 18.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
                             process_description.value,
-                            fontSize = 16.sp,
+                            fontSize = 14.sp,
                             textAlign = TextAlign.Center
                         )
                     }
                     Button(onClick = {
                         if (proc_level == 0) {
+
                             cook(cart)
                             buttonText.value = "Next"
                             proc_level = 1
@@ -867,10 +898,18 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                                 IsWaitNext = false
                                 process_description.value = "${process_list[proc_idx].description}"
                                 process_food.value = "${processing_food_list[proc_idx].name}"
+
+
+                                for (curr_recipe in processing_food_list[proc_idx].recipe) {
+                                    process_material.value =
+                                        curr_recipe.material.joinToString(separator = ", ")
+                                }
+
                                 proc_idx++
                             } else if (!IsEnd) {
-                                process_description.value = "잠시만 기다려주세요."
+                                process_description.value = "-"
                                 process_food.value = "잠시만 기다려주세요."
+                                process_material.value = "-"
 
                                 IsWaitNext = true
                             } else {
@@ -902,14 +941,20 @@ fun getDrawableIntByFileName(context: Context, fileName: String): Int {
     return context.resources.getIdentifier(fileName, "drawable", context.packageName)
 }
 
+var process_percent = mutableStateMapOf<Cuisine, Int>()
+
 @Preview
 @Composable
 fun FoodCardInProcess(cuisine: Cuisine) {
     var shape = RoundedCornerShape(9.dp)
     val food_logo = "@drawable/food_logo_${(cuisine.name).lowercase()}"
-    var drawableInt = getDrawableIntByFileName(context = getAppContext() , fileName = food_logo)
-    if(drawableInt == 0){
+    var drawableInt = getDrawableIntByFileName(context = getAppContext(), fileName = food_logo)
+    if (drawableInt == 0) {
         drawableInt = R.drawable.default_image
+    }
+
+    if(process_percent[cuisine] == null){
+        process_percent[cuisine] = 0
     }
 
     Card(
@@ -918,31 +963,37 @@ fun FoodCardInProcess(cuisine: Cuisine) {
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
     ) {
+        Box(
+            modifier = Modifier
+                .size(98.dp)
+                .clip(shape)
+                .padding(horizontal = 5.dp)
+                .border(1.5.dp, Color(0xEAEAEA), shape = shape)
+                .align(alignment = Alignment.CenterHorizontally)
+        ) {
+            Icon(
+                painter = painterResource(id = drawableInt),
+                contentDescription = cuisine.description,
+                Modifier.fillMaxSize(),
+                tint = Color.Unspecified,
+            )
+        }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.verticalScroll(rememberScrollState())
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .align(alignment = Alignment.CenterHorizontally)
+
         ) {
-            Box(
-                modifier = Modifier
-                    .size(98.dp)
-                    .clip(shape)
-                    .padding(horizontal = 5.dp)
-                    .border(1.5.dp, Color(0xEAEAEA), shape = shape)
-                    .align(alignment = Alignment.CenterHorizontally)
-            ) {
-                Icon(
-                    painter = painterResource(id = drawableInt),
-                    contentDescription = cuisine.description,
-                    Modifier.fillMaxSize(),
-                    tint = Color.Unspecified,
-                )
-            }
-            Text(cuisine.name,
+            Text(
+                cuisine.name,
                 maxLines = 1,
-                softWrap = false,
-                overflow = TextOverflow.Ellipsis)
-            Text("99.9" + " %", maxLines = 1)
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                "${process_percent[cuisine]} %"
+            )
         }
         // Card content
     }
@@ -955,9 +1006,9 @@ fun FoodCardInHome(cuisine: Cuisine) {
     val isChecked = remember { mutableStateOf(false) }
 
     val food_logo = "@drawable/food_logo_${(cuisine.name).lowercase()}"
-    var drawableInt = getDrawableIntByFileName(context = getAppContext() , fileName = food_logo)
+    var drawableInt = getDrawableIntByFileName(context = getAppContext(), fileName = food_logo)
 
-    if(drawableInt == 0){
+    if (drawableInt == 0) {
         drawableInt = R.drawable.default_image
     }
     isChecked.value = cart.contains(cuisine)

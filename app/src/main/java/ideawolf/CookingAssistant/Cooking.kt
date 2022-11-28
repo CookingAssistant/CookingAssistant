@@ -12,9 +12,6 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
     for(c in Cuisines) {
             num_of_recipe = c.recipe.size + num_of_recipe
         }
-//            for(recipe in c.recipe){
-//                recipe.start()
-//            }
 
     var did: Int = 0
     IsEnd = false
@@ -34,6 +31,9 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
                             IsWaitNext = false
                             process_description.value = process_list[proc_idx].description
                             process_food.value = "${processing_food_list[proc_idx].name}"
+                            for (curr_recipe in processing_food_list[proc_idx].recipe) {
+                                process_material.value = curr_recipe.material.joinToString(separator = ", ")
+                            }
 
                             proc_idx++
                         }
@@ -53,6 +53,9 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
                                 IsWaitNext = false
                                 process_description.value = process_list[proc_idx].description
                                 process_food.value = "${processing_food_list[proc_idx].name}"
+                                for (curr_recipe in processing_food_list[proc_idx].recipe) {
+                                    process_material.value = curr_recipe.material.joinToString(separator = ", ")
+                                }
                                 proc_idx++
                             }
 
@@ -60,7 +63,19 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
                             did++
                         }
                     }
+
                 }
+
+                var max = 0
+                c.recipe.forEachIndexed { index, element ->
+                    if(element.done == true){
+                        if(max < index + 1){
+                            max = index + 1
+                        }
+                    }
+                }
+
+                process_percent[c] = ((max / c.recipe.size.toDouble()) * 100).toInt()
             }
         }
 
