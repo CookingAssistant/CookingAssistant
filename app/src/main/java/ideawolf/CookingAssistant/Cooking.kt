@@ -64,6 +64,7 @@ fun cook(Cuisines: ArrayList<Cuisine>) {
             }
         }
 
+        proc_level = 0
         IsEnd = true
     }).start()
 

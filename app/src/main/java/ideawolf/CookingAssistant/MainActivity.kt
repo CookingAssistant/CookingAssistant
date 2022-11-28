@@ -164,6 +164,500 @@ fun saveRecipes() {
                         "canDoOther": false
                     }
                 ]
+            },
+            {
+                "name": "콩나물무침",
+                "description": "매콤새콤한 콩나물무침입니다.",
+                "recipe": [
+                    {
+                        "title": "콩나물 손질하기",
+                        "material": [
+                            "콩나물",
+                            "물500ml",
+                            "체"
+                        ],
+                        "description": "콩나물을 흐르는 물에 여러번 씻어준 뒤 체에 밭쳐 물기를 빼주세요.",
+                        "duration": 60000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "대파 손질하기",
+                        "material": [
+                            "대파",
+                            "가위"
+                        ],
+                        "description": "대파를 가위로 잘라주세요.",
+                        "duration": 30000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "물 끓이기",
+                        "material": [
+                            "물",
+                            "냄비"
+                        ],
+                        "description": "물이 끓을 때 까지 기다려주세요",
+                        "duration": 240000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "콩나물 데치기",
+                        "material": [
+                            "콩나물",
+                            "끓는 물",
+                            "소금"
+                        ],
+                        "description": "끓는 물에 소금 반 큰술과 콩나물을 넣고 끓여주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "콩나물 물 빼기",
+                        "material": [
+                            "콩나물",
+                            "체"
+                        ],
+                        "description": "데친 콩나물을 체에 밭쳐 물기를 빼주세요",
+                        "duration": 60000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "재료 넣기",
+                        "material": [
+                            "콩나물",
+                            "대파",
+                            "고춧가루 2 큰 술",
+                            "소금 적당량",
+                            "다진 마늘 반 큰술",
+                            "깨소금 적당량"
+                        ],
+                        "description": "재료를 넣어 주세요",
+                        "duration": 120000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "석어 주기",
+                        "material": [
+                            "진간장"
+                        ],
+                        "description": "진간장 한 큰술을 넣고, 콩나물 대가리가 떨어지지 않도록 조심스럽게 섞어주세요",
+                        "duration": 180000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "마무리 하기",
+                        "material": [
+                            "참기름"
+                        ],
+                        "description": "참기름 한 큰 술 두륵 조물조물 해주세요",
+                        "duration": 60000,
+                        "canDoOther": false
+                    }
+                ]
+            },
+            {
+                "name": "순두부 찌개",
+                "description": "얼큰한 순두부찌개입니다.",
+                "recipe": [
+                    {
+                        "title": "냄비에 재료 넣기",
+                        "material": [
+                            "물",
+                            "멸치",
+                            "다시마",
+                            "표고버섯"
+                        ],
+                        "description": "냄비에 재료를 넣어주세요.",
+                        "duration": 30000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "냄비 끓이기",
+                        "material": [],
+                        "description": "냄비에 넣은 재료를 끓여주세요.",
+                        "duration": 240000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "재료 손질하기",
+                        "material": [
+                            "청양고추1개",
+                            "호박 1/4 개",
+                            "칼",
+                            "가위"
+                        ],
+                        "description": "청양고추를 어슷하게 썰고 호박은 반달 모양으로 썰어주세요",
+                        "duration": 180000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "냄비에 재료 볶기",
+                        "material": [
+                            "냄비",
+                            "참기름 한 큰술",
+                            "식용유 두 큰술",
+                            "양파",
+                            "대파"
+                        ],
+                        "description": "냄비에 참기름과 식용유를 넣고 양파, 대파를 볶아주세요",
+                        "duration": 300000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "고추 기름 만들기",
+                        "material": [
+                            "고추가루 한 큰술 반"
+                        ],
+                        "description": "냄비에 고루가루 한 큰술 반을 넣고 볶아주세요",
+                        "duration": 300000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "간 맞추기",
+                        "material": [
+                            "소금 반 큰술",
+                            "설탕 한 꼬집"
+                        ],
+                        "description": "냄비에 재료를 넣고 계속 볶아주세요",
+                        "duration": 180000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "맛 만들기",
+                        "material": [
+                            "굴소스 한 큰술",
+                            "간장 한 큰술"
+                        ],
+                        "description": "냄비에 재료를 넣고 계속 볶아주세요",
+                        "duration": 180000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "국 물 만들기",
+                        "material": [
+                            "육수"
+                        ],
+                        "description": "냄비에 전에 만든 육수를 반정도 채워주세요",
+                        "duration": 30000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "국물 끓이기",
+                        "material": [],
+                        "description": "냄비를 팔팔 끓여주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "간 조절하기",
+                        "material": [
+                            "호박",
+                            "고추",
+                            "다진마늘"
+                        ],
+                        "description": "끓는 냄비에 호박, 고추, 다진마늘을 넣어주세요",
+                        "duration": 120000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "순부두 넣기",
+                        "material": [
+                            "순두부"
+                        ],
+                        "description": "순두부를 넣어주세요",
+                        "duration": 60000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "마무리 하기",
+                        "material": [
+                            "달걀",
+                            "파"
+                        ],
+                        "description": "달걀과 파를 넣고 마무리 해주세요",
+                        "duration": 60000,
+                        "canDoOther": false
+                    }
+                ]
+            },
+            {
+                "name": "닭볶음탕",
+                "description": "매콤한 닭볶음탕입니다",
+                "recipe": [
+                    {
+                        "title": "재료 손질하기",
+                        "material": [
+                            "파",
+                            "청양고추",
+                            "당근",
+                            "감자",
+                            "양파"
+                        ],
+                        "description": "파와 청양고추를 어슷, 감자는 큼직, 양파는 사각으로 썰어주세요.",
+                        "duration": 180000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "얀념 만들기",
+                        "material": [
+                            "고추장 두 큰술",
+                            "고추가루 일곱 큰술",
+                            "설탕 두 큰술",
+                            "국간장 다섯 큰술",
+                            "마늘 한 큰술",
+                            "물 소주잔 한 컵"
+                        ],
+                        "description": "재료를 모두 넣고 섞어주세요",
+                        "duration": 300000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "닭 손질하기-물 끓이기",
+                        "material": [
+                            "냄비",
+                            "물"
+                        ],
+                        "description": "냄비에 물을 넣고 끓여주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "닭 손질하기 - 데치기",
+                        "material": [
+                            "끓는 물",
+                            "닭"
+                        ],
+                        "description": "닭을 데쳐주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "닭 손질하기 - 데치기",
+                        "material": [
+                            "찬 물",
+                            "깊은 냄비",
+                            "소주 한 잔"
+                        ],
+                        "description": "닭을 냄비에 넣고 소주 한 컵을 부어 줍니다.(잡내를 잡아줍니다)",
+                        "duration": 60000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "재료 넣기",
+                        "material": [
+                            "당근",
+                            "감자",
+                            "양념장",
+                            "물800ml"
+                        ],
+                        "description": "당근,감자,양념장 물을 넣어줍니다",
+                        "duration": 60000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "냄비 끓이기",
+                        "material": [],
+                        "description": "냄비를 강불에서 끓여주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "재료 섞기",
+                        "material": [],
+                        "description": "냄비에 재료를 한번 섞어주세요",
+                        "duration": 30000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "온도 조절하기",
+                        "material": [],
+                        "description": "강불과 중불 사이에서 팔팔 끓여주세요",
+                        "duration": 6000000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "졸이기",
+                        "material": [],
+                        "description": "취향에 따라 졸여주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "마무리 하기",
+                        "material": [
+                            "대파",
+                            "청양고추"
+                        ],
+                        "description": "대파와 청양고추를 넣고 불을 꺼주세요",
+                        "duration": 30000,
+                        "canDoOther": false
+                    }
+                ]
+            },
+            {
+                "name": "돼지고기 김치찌개",
+                "description": "얼큰한 김치찌개 입니다",
+                "recipe": [
+                    {
+                        "title": "고기 손질하기",
+                        "material": [
+                            "키친타올",
+                            "고기",
+                            "칼",
+                            "도마"
+                        ],
+                        "description": "키친타올로 고기 핏물을 제거하고 먹기 좋은 크기로 썰어주세요",
+                        "duration": 300000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "김치 손질하기",
+                        "material": [
+                            "김치",
+                            "칼",
+                            "도마"
+                        ],
+                        "description": "김치를 먹기 좋은 크기로 썰어주세요",
+                        "duration": 300000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "된장 볶기",
+                        "material": [
+                            "들기름 두 큰술",
+                            "된장 한 큰술"
+                        ],
+                        "description": "냄비에 들기슬과 된장을 넣고 볶아주세요",
+                        "duration": 300000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "고기 볶기",
+                        "material": [
+                            "고기"
+                        ],
+                        "description": "고기 겉면이 익을 때가지 잘 볶아주세요",
+                        "duration": 180000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "김치 볶기",
+                        "material": [
+                            "김치"
+                        ],
+                        "description": "김치를 넣고 볶아주세요",
+                        "duration": 180000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "육수 넣고 끓이기",
+                        "material": [
+                            "물800ml"
+                        ],
+                        "description": "물(육수)를 넣고 강불로 끓여주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "졸이기",
+                        "material": [],
+                        "description": "뚜껑을 덮고 약불로 줄여 졸여주세요",
+                            "duration": 1200000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "고추, 대파 손질",
+                        "material": [
+                            "대파",
+                            "고추",
+                            "가위"
+                        ],
+                        "description": "대파를 어슷썰고 청양고추를 송송 썰어 주세요",
+                        "duration": 180000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "간 맞추기",
+                        "material": [
+                            "다진마늘 한 큰술",
+                            "후추 두 꼬집"
+                        ],
+                        "description": "중불로 올린 뒤 다진마늘과 후추를 넣고 저어주세요",
+                        "duration": 60000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "재료 넣기",
+                        "material": [
+                            "대파",
+                            "고추"
+                        ],
+                        "description": "손질된 대파와 고추를 넣어주세요",
+                        "duration": 60000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "마무리 하기",
+                        "material": [],
+                        "description": "5분간 팔팔 끓이고 마무리합니다",
+                        "duration": 300000,
+                        "canDoOther": true
+                    }
+                ]
+            },
+            {
+                "name": "된장찌개",
+                "description": "시원한 된장찌개 입니다",
+                "recipe": [
+                    {
+                        "title": "냄비에 재료 넣기",
+                        "material": [
+                            "물800ml",
+                            "된장",
+                            "고추가루",
+                            "다진마늘",
+                            "설탕",
+                            "간장"
+                        ],
+                        "description": "냄비에 재료를 넣어주세요",
+                        "duration": 120000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "끓이기",
+                        "material": [],
+                        "description": "냄비를 강불로 끓여주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    },
+                    {
+                        "title": "재료손질",
+                        "material": [
+                            "양파",
+                            "버섯",
+                            "애호박",
+                            "청양고추",
+                            "두부"
+                        ],
+                        "description": "재료를 적당한 크기로 설어주세요",
+                        "duration": 300000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "재료 넣기",
+                        "material": [],
+                        "description": "손질한 재료를 냄비에 넣어주세요",
+                        "duration": 60000,
+                        "canDoOther": false
+                    },
+                    {
+                        "title": "마무리 하기",
+                        "material": [],
+                        "description": "5분간 끓여주고 마무리해주세요",
+                        "duration": 300000,
+                        "canDoOther": true
+                    }
+                ]
             }
         ]
     """.trimIndent()
@@ -261,12 +755,12 @@ val process_food = mutableStateOf("Cuisine Name")
 var IsWaitNext: Boolean = false
 var proc_idx: Int = 0
 var IsEnd:Boolean=false
+var proc_level: Int = 0
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Preview(showBackground = true)
 @Composable
 fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, selectedItem: Int) {
     val buttonText = remember { mutableStateOf("Start") }
-    var proc_level: Int = 0
     process_description.value = "-"
     process_food.value = "-"
     CookingAssistantTheme {
