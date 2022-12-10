@@ -2,6 +2,8 @@ import android.graphics.drawable.Drawable
 import kotlinx.serialization.Serializable
 import androidx.annotation.DrawableRes
 
+// A class for store Cusine(Cooking).
+// This class contain the arraylist of Recipe class.
 @Serializable
 class Cuisine(var name: String, var description: String, var recipe: ArrayList<Recipe>){
 

@@ -189,6 +189,7 @@ fun getDrawableIntByFileName(context: Context, fileName: String): Int {
 
 var process_percent = mutableStateMapOf<Cuisine, Int>()
 
+// Store Cusine and Recipe with Json format
 var jsonString: String = """
         [
             {

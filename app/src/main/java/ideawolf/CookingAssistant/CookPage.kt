@@ -147,7 +147,7 @@ fun cooking_page(onNavigateToCooking: () -> Unit, onNavigateToHome: () -> Unit, 
                     Button(onClick = {
                         if (proc_level == 0) {
 
-                            cook(cart)
+                            cook(cart) // When button click, method cook start.
                             buttonText.value = "Next"
                             proc_level = 1
                             IsWaitNext = true
